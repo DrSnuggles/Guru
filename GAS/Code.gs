@@ -32,12 +32,12 @@ function main(e) {
   const body = `<p>Look Dev,</p>
     <p>I can see you\'re really upset about this.<br/>
     I honestly think you ought to sit down calmly, take a stress pill, and think things over.</p>
-    <b>Time</b>: ${new Date()}<br/>
-    <b>URL</b>: ${j.url}<br/>
-    <b>Err</b> ${j.stack.replace(/\n/g,'<br/>')}<br/>
-    <b>Agent</b>: ${j.agent}<br/>
-    <b>Screen</b>: ${j.screen}<br/>
-    <b>Window</b>: ${j.window}
+    <b>Time:</b> ${new Date()}<br/>
+    <b>URL:</b> ${j.url}<br/>
+    <b>Err:</b> ${j.stack.replace(/\n/g,'<br/>')}<br/>
+    <b>Agent:</b> ${j.agent}<br/>
+    <b>Screen:</b> ${j.screen}<br/>
+    <b>Window:</b> ${j.window}
     `
   MailApp.sendEmail({to:to, subject:subject, htmlBody:body})
 
