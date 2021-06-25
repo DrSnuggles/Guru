@@ -12,7 +12,7 @@
   window.Guru = {
     show: true,
     send: true,
-    url: 'https://script.google.com/macros/s/AKfycbxALCFIb5zwzqKKi6vuDRGxQR_pV7EFBv7dBF7D1QsXKiHRnY8Fy13NUvwJsGO3Jolj6g/exec',
+    url: 'https://script.google.com/macros/s/AKfycbzrnxYPm1SbZDP5QOb7-V0bjbfCatwSaLUf29867-GA3_DIwkv4iJd9n16eTEiiO8_f/exec',
     cors: true,
     head: 'Software Failure. &nbsp; Touch / ESC / LMB to continue.',
     css: 'guru{position:fixed;top:0;left:0;background:black;color:red;font:1.5vw monospace;display:block;text-align:center;width:calc(100% - 24px);padding:6px;border:6px solid #000;animation:blink .5s step-end infinite alternate;}@keyframes blink {50%{border-color:#F00;}}',
@@ -116,6 +116,9 @@
           line: line,
           col: col,
           stack: err.stack,
+          agent: navigator.userAgent,
+          screen: screen.width+'x'+screen.height+'x'+screen.colorDepth,
+          window: innerWidth+'x'+innerHeight+'@'+devicePixelRatio,
         }, function(ret){
           try { // handles both, display yes/no and already closed
             var j = JSON.parse(ret.responseText)

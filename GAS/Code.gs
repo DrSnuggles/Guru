@@ -34,8 +34,11 @@ function main(e) {
     I honestly think you ought to sit down calmly, take a stress pill, and think things over.</p>
     <b>Time</b>: ${new Date()}<br/>
     <b>URL</b>: ${j.url}<br/>
-    <b>Err:</b> ${j.stack.replace(/\n/g,'<br/>')}`
-
+    <b>Err</b> ${j.stack.replace(/\n/g,'<br/>')}
+    <b>Agent</b>: ${j.agent}<br/>
+    <b>Screen</b>: ${j.screen}<br/>
+    <b>Window</b>: ${j.window}<br/>
+    `
   MailApp.sendEmail({to:to, subject:subject, htmlBody:body})
 
   return ContentService.createTextOutput(JSON.stringify({status:"OK"}))
