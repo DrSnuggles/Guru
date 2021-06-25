@@ -12,12 +12,11 @@
   window.Guru = {
     show: true,
     send: true,
-    url: 'https://script.google.com/macros/s/AKfycbxYmEkLon4v77HBnzTdv4K918LDd0808VFD5U5Qex1HhnuZ1DkHxt__UV1cn-7XUtp04w/exec',
+    url: 'https://script.google.com/macros/s/AKfycbwf23-o9k3mp6vQ8F_QlKiz8jdR9DP00nh0PEzSVsmHfYSmqL-AUBLkyZwfXWf8E3cXaA/exec',
     cors: true,
     head: 'Software Failure. &nbsp; Touch / ESC / LMB to continue.',
     css: 'guru{position:fixed;top:0;left:0;background:black;color:red;font:1.5vw monospace;display:block;text-align:center;width:calc(100% - 24px);padding:6px;border:6px solid #000;animation:blink .5s step-end infinite alternate;}@keyframes blink {50%{border-color:#F00;}}',
     display: function(msg, url, line, col, err){
-      //console.log('display')
       var t = ['<guru><style>']
       t.push(Guru.css)
       t.push('</style><div>')
@@ -44,7 +43,6 @@
       window.addEventListener('touchstart',Guru.touchHandler)
     },
     hide: function(msg){
-      //console.log('hide')
       var guru = document.getElementsByTagName('guru')[0]
       document.body.removeChild(guru)
       
@@ -55,7 +53,6 @@
       
     },
     keyHandler: function(ev){
-      //console.log(ev)
       var catched = false
       if (ev.keyCode === 27) { // ESC
         Guru.hide()
@@ -64,7 +61,6 @@
       if (catched) ev.preventDefault()
     },
     mouseHandler: function(ev){
-      //console.log(ev)
       var catched = false
       if (ev.buttons === 1) { // LMB
         Guru.hide()
@@ -73,34 +69,27 @@
       if (catched) ev.preventDefault()
     },
     touchHandler: function(ev){
-      console.log(ev)
+      console.log(ev) // ToDo
     },
     post: function(url, dat, cb) {
       // IE11 compatible, no fetch :(
 
-      // Prepare data for POST, could send as JSON
-      var data = new FormData()
-      for (var key in dat) {
-        data.append(key, dat[key])
-      }
-      
       var xhr = new XMLHttpRequest()
       if (typeof XSLTProcessor === 'undefined') {
         try {xhr.responseType = 'msxml-document'} catch(e) {} // Helping IE11
       }
       
       xhr.open('POST', url, true)
-      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
       xhr.onload = function() {
         if (cb) cb( this )
       }
       xhr.onerror = function(){
         try { // handles both, display yes/no and already closed
-          document.getElementsByTagName('guru')[0].getElementsByTagName('span')[0].innerText = 'Error while sending report.'
+          document.getElementsByTagName('guru')[0].getElementsByTagName('span')[0].innerText = 'Error sending report.'
         }catch(e){}
       }
 
-      xhr.send(data)
+      xhr.send( JSON.stringify(dat) )
     },
   }
   
@@ -109,14 +98,12 @@
   //
   onerror = function(msg, url, line, col, err){
 
-    //console.log(err.stack)
-    
     try { // try catch to prevent getting stuck in an endless loop
 
       // crossorigin check
       if (msg.toLowerCase().indexOf('script error') > -1) {
         console.log('CORS')
-        Guru.cors = true // todo : check or false ??? :)
+        Guru.cors = true // ToDo : check if this works
       }
 
       // Server
@@ -129,10 +116,11 @@
           line: line,
           col: col,
           stack: err.stack,
-        }, function(){
-          //console.info('Error info was sent')
+        }, function(ret){
           try { // handles both, display yes/no and already closed
-            document.getElementsByTagName('guru')[0].getElementsByTagName('span')[0].innerText = 'Report was sent.'
+            var j = JSON.parse(ret.responseText)
+            var suc = (j && j.status && j.status === "OK") ? true : false
+            document.getElementsByTagName('guru')[0].getElementsByTagName('span')[0].innerText = suc ? 'Report was sent.' : 'Error sending report.'
           }catch(e){}
         })
       }
