@@ -19,7 +19,7 @@ function main(e) {
   // check params
   if (!(e && e.postData && e.postData.contents)) return badExit('post')
   let j = JSON.parse( e.postData.contents )
-  if (!(j && j.msg && j.url && j.line && j.col && j.stack)) return badExit('data')
+  if (!(j && j.msg && j.url && j.line && j.col && j.stack && j.agent && j.screen && j.window)) return badExit('data')
 
   // filter for allowed URLs
   const allowedURLs = ['drsnuggles.github.io','mstest.net']
@@ -34,10 +34,10 @@ function main(e) {
     I honestly think you ought to sit down calmly, take a stress pill, and think things over.</p>
     <b>Time</b>: ${new Date()}<br/>
     <b>URL</b>: ${j.url}<br/>
-    <b>Err</b> ${j.stack.replace(/\n/g,'<br/>')}
+    <b>Err</b> ${j.stack.replace(/\n/g,'<br/>')}<br/>
     <b>Agent</b>: ${j.agent}<br/>
     <b>Screen</b>: ${j.screen}<br/>
-    <b>Window</b>: ${j.window}<br/>
+    <b>Window</b>: ${j.window}
     `
   MailApp.sendEmail({to:to, subject:subject, htmlBody:body})
 
