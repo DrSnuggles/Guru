@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Guru Meditation</title>
+    <style>
+      body{
+        font-family: sans-serif;
+        margin: 20px;
+      }
+      pre,
+      .border{
+        border: 1px solid #55F;
+        padding: 20px;
+      }
+      p{
+        text-align: justify;
+      }
+
+    </style>
+
+    <script src="https://DrSnuggles.github.io/Guru/js/guru.js" crossorigin="true"></script>
+</head>
+<body>
+<h1>Guru Meditation</h1>
+<div class="border">
+    <h2>Idea</h2>
+    <p>Yes, there are already Guru Meditation clones/remakes around and also used in recent ESP32 hardware, or DS homebrew not only Amiga.</p>
+    <p>OK, most of the time we disliked the Gurus but for a dev they should be helpful.</p>
+    <p>That's the purpose of this project.</p>
+    
+    <h2>Modern way</h2>
+    <p>Just displaying crazy numbers doesn't help and for web devs it is more important to also see remote errors, not only the ones from the machine you sit in front of. Which should work flawless of course ;)</p>
+    <p>That's why the my Guru is a split personality. One half is the visual message for the person in front of the app, while the other half is mail to dev and inform that an error occured in his software. A bit of telemetry.</p>
+    <p>Both are configurable. For example while developing you maybe do not want mails, but in production you maybe do not want to show errors to users instead get an information about this event.</p>
+
+    <h2>Client / Show</h2>
+    <p>It's the blinking box on top of the screen. You will notice.</p>
+    <p>Press ESC to see a Guru Meditation.</p>
+
+    <h2>Server / Send</h2>
+    <p>For all cases without access to server side scripts i picked GAS Google App Script as very simple example to send out mails.</p>
+    <p>This is not best practise for production, please use own PHP/NodeJS/whatever you prefer.</p>
+
+    <h2>Browser Compatibility</h2>
+    <p>Most major browsers, even IE11.</p>
+
+    <h2>License</h2>
+    <p>Public Domain</p>
+    
+    <h2>Implement</h2>
+    <pre>
+      <code>
+        &lt;script src="https://DrSnuggles.github.oi/Guru/js/guru.js">&lt;/script>
+      </code>
+    </pre>
+
+    <h2>Configure</h2>
+    <pre>
+      <code>
+        &ltscript>
+          Guru.show = false; // Display errors in the old Guru fashion way? default = true
+          Guru.send = true;  // Send error mail to dev?                     default = false
+        &lt/script>
+      </code>
+    </pre>
+
+</div>
+
+<script>
+  onkeydown = function(ev){
+    if (ev.keyCode === 27){ // ESC
+      justInBetweenToShowStack()
+    }
+  }
+  function justInBetweenToShowStack(){
+    ThisFunctionCallIsNonExistentAndProducesError()
+  }
+</script>
+
+</body>
+</html>
