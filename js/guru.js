@@ -12,7 +12,7 @@
   window.Guru = {
     show: true,
     send: true,
-    url: 'https://script.google.com/macros/s/AKfycbwf23-o9k3mp6vQ8F_QlKiz8jdR9DP00nh0PEzSVsmHfYSmqL-AUBLkyZwfXWf8E3cXaA/exec',
+    url: 'https://script.google.com/macros/s/AKfycbwIDY4Dmka0VoXDp-MRIpptVEKGcyjQkph5tKR5mLWP7is2LYvwN-C0Nk95VoCAwANFow/exec',
     cors: true,
     head: 'Software Failure. &nbsp; Touch / ESC / LMB to continue.',
     css: 'guru{position:fixed;top:0;left:0;background:black;color:red;font:1.5vw monospace;display:block;text-align:center;width:calc(100% - 24px);padding:6px;border:6px solid #000;animation:blink .5s step-end infinite alternate;}@keyframes blink {50%{border-color:#F00;}}',
