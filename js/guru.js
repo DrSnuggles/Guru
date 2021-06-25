@@ -12,7 +12,7 @@
   window.Guru = {
     show: true,
     send: true,
-    url: 'https://script.google.com/macros/s/AKfycbwIDY4Dmka0VoXDp-MRIpptVEKGcyjQkph5tKR5mLWP7is2LYvwN-C0Nk95VoCAwANFow/exec',
+    url: 'https://script.google.com/macros/s/AKfycbxALCFIb5zwzqKKi6vuDRGxQR_pV7EFBv7dBF7D1QsXKiHRnY8Fy13NUvwJsGO3Jolj6g/exec',
     cors: true,
     head: 'Software Failure. &nbsp; Touch / ESC / LMB to continue.',
     css: 'guru{position:fixed;top:0;left:0;background:black;color:red;font:1.5vw monospace;display:block;text-align:center;width:calc(100% - 24px);padding:6px;border:6px solid #000;animation:blink .5s step-end infinite alternate;}@keyframes blink {50%{border-color:#F00;}}',
@@ -119,8 +119,8 @@
         }, function(ret){
           try { // handles both, display yes/no and already closed
             var j = JSON.parse(ret.responseText)
-            var suc = (j && j.status && j.status === "OK") ? true : false
-            document.getElementsByTagName('guru')[0].getElementsByTagName('span')[0].innerText = suc ? 'Report was sent.' : 'Error sending report.'
+            var suc = (j && j.status && j.status == "OK") ? true : false
+            document.getElementsByTagName('guru')[0].getElementsByTagName('span')[0].innerText = (suc) ? 'Report was sent.' : 'Error sending report.'
           }catch(e){}
         })
       }

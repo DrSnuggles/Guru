@@ -17,14 +17,14 @@ function doGet(e) {
 function main(e) {
 
   // check params
-  if (!(e && e.postData && e.postData.contents)) return badExit()
+  if (!(e && e.postData && e.postData.contents)) return badExit('post')
   let j = JSON.parse( e.postData.contents )
-  if (!(j && j.msg && j.url && j.line && j.col && j.stack)) return badExit()
+  if (!(j && j.msg && j.url && j.line && j.col && j.stack)) return badExit('data')
 
   // filter for allowed URLs
-  const allowedURLs = ['drsnuggles.github.io']
+  const allowedURLs = ['drsnuggles.github.io','mstest.net']
   const tstURL = j.url.toLowerCase().split('/')[2]
-  if (allowedURLs.indexOf(tstURL) === -1) return badExit()
+  if (allowedURLs.indexOf(tstURL) === -1) return badExit(tstURL)
 
   // prepare mail
   const to = 'YOUR@MAIL.DOM'
@@ -38,12 +38,12 @@ function main(e) {
 
   MailApp.sendEmail({to:to, subject:subject, htmlBody:body})
 
-  return ContentService.createTextOutput(JSON.stringify('{status:"OK"}'))
+  return ContentService.createTextOutput(JSON.stringify({status:"OK"}))
   .setMimeType(ContentService.MimeType.JSON)
 
 }
 
-function badExit() {
-  return ContentService.createTextOutput(JSON.stringify('{status:"ERROR"}'))
+function badExit(reason) {
+  return ContentService.createTextOutput(JSON.stringify({status:reason}))
   .setMimeType(ContentService.MimeType.JSON)
 }
