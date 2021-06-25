@@ -12,7 +12,7 @@
   window.Guru = {
     show: true,
     send: true,
-    url: 'https://script.google.com/macros/s/AKfycbyW7rDf-ulKU9a49Pacfu-yoV3_XU0Cots_ENFC0zp_BNyJTu8OA2pasM022j-SpC6r/exec',
+    url: 'https://script.google.com/macros/s/AKfycbxYmEkLon4v77HBnzTdv4K918LDd0808VFD5U5Qex1HhnuZ1DkHxt__UV1cn-7XUtp04w/exec',
     cors: true,
     head: 'Software Failure. &nbsp; Touch / ESC / LMB to continue.',
     css: 'guru{position:fixed;top:0;left:0;background:black;color:red;font:1.5vw monospace;display:block;text-align:center;width:calc(100% - 24px);padding:6px;border:6px solid #000;animation:blink .5s step-end infinite alternate;}@keyframes blink {50%{border-color:#F00;}}',
@@ -130,7 +130,10 @@
           col: col,
           stack: err.stack,
         }, function(){
-          console.info('Error info was sent')
+          //console.info('Error info was sent')
+          try { // handles both, display yes/no and already closed
+            document.getElementsByTagName('guru')[0].getElementsByTagName('span')[0].innerText = 'Report was sent.'
+          }catch(e){}
         })
       }
 
