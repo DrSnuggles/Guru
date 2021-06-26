@@ -25,7 +25,7 @@
       var mobileURL = 0 // how many pixels are used by URL address bar
       var isMobileDevice = /Mobi/i.test(window.navigator.userAgent)
       if (isMobileDevice) {
-        mobileURL = (window.visualViewport) ? (window.innerHeight - window.visualViewport.height*devicePixelRatio) : 0 // else guru bar is behind URL on mobile
+        mobileURL = (visualViewport) ? (innerHeight - visualViewport.height*devicePixelRatio) : 0 // else guru bar is behind URL on mobile
         // ToDo: Zoom
         //var zoom = document.documentElement.clientWidth / window.innerWidth
         //alert(devicePixelRatio, mobileURL, window.innerHeight, window.visualViewport.height, zoom)
@@ -83,7 +83,6 @@
     },
     touchHandler: function(ev){
       Guru.hide()
-      ev.preventDefault()
     },
     post: function(url, dat, cb) {
       // IE11 compatible, no fetch :(
