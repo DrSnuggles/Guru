@@ -26,9 +26,10 @@
       var isMobileDevice = /Mobi/i.test(navigator.userAgent)
       if (isMobileDevice) {
         // ToDo: Zoom
-        var zoom = document.documentElement.clientWidth / innerWidth
-        mobileURL = (visualViewport) ? (innerHeight - visualViewport.height*zoom) : 0 // else guru bar is behind URL on mobile
-        alert('devicePixelRatio '+ devicePixelRatio +'\nmobileURL '+ mobileURL+'\ninnerHeight '+innerHeight +'\nvisualViewport '+visualViewport.height +'\nzoom '+zoom)
+        //var zoom = document.documentElement.clientWidth / innerWidth
+        //mobileURL = (visualViewport) ? (innerHeight - visualViewport.height*zoom) : 0 // else guru bar is behind URL on mobile
+        alert('mob')
+        //alert('devicePixelRatio '+ devicePixelRatio +'\nmobileURL '+ mobileURL+'\ninnerHeight '+innerHeight +'\nvisualViewport '+visualViewport.height +'\nzoom '+zoom)
       }
       var t = ['<guru style="top:'+mobileURL+'px"><style>']
       t.push(Guru.css)
