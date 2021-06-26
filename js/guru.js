@@ -23,15 +23,22 @@
       //console.log(window.innerHeight, window.visualViewport.height)
       // oops more problem then expected... ha ha
       var mobileURL = 0 // how many pixels are used by URL address bar
-      var zoom = document.documentElement.clientWidth / innerWidth
+      // ToDo: Zoom, but only mobile and tablets ... Yeah!
       var userAgent = navigator.userAgent.toLowerCase()
       var isTablet = /(ipad|tablet|(android(?!.*mobile))|(windows(?!.*phone)(.*touch))|kindle|playbook|silk|(puffin(?!.*(IP|AP|WP))))/.test(userAgent)
       var isMobile = /mobi/i.test(userAgent)
+      var isMac = navigator.platform.toUpperCase().indexOf('MAC')>=0;
+      var isMacLike = navigator.platform.match(/(Mac|iPhone|iPod|iPad)/i)?true:false;
+      var isIOS = navigator.platform.match(/(iPhone|iPod|iPad)/i)?true:false;
+
+      var zoom = 1
+      if (typeof visualViewport !== 'undefined') zoom = (innerWidth / visualViewport.width)
       if (isMobile) {
         //mobileURL = (visualViewport) ? (innerHeight - visualViewport.height) : 0 // else guru bar is behind URL on mobile
-        // ToDo: Zoom, but only mobile and tablets ... Yeah!
       }
       //alert('nonZoom\ndevicePixelRatio '+ devicePixelRatio +'\nmobileURL '+ mobileURL+'\ninnerHeight '+innerHeight +'\nvisualViewport '+visualViewport.height +'\nzoom '+zoom+'\nisMobile '+isMobile+'\nisTablet '+isTablet)
+      console.log('nonZoom\ndevicePixelRatio '+ devicePixelRatio +'\nmobileURL '+ mobileURL+'\ninnerHeight '+innerHeight +'\nzoom '+zoom+'\nisMobile '+isMobile+'\nisTablet '+isTablet+'\nisMac '+isMac+'\nisMacLike '+isMacLike+'\nisIOS '+isIOS)
+
       var t = ['<guru style="top:'+mobileURL+'px"><style>']
       t.push(Guru.css)
       t.push('</style><div>')
