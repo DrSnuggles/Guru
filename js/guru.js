@@ -15,20 +15,18 @@
     url: 'https://script.google.com/macros/s/AKfycbz4nhciVHtLjWJjNqeCodG7MFE4NGCY45S5zI--9BftHoQDovFCX88osy7WDqEOeQqn9w/exec',
     cors: true,
     head: 'Software Failure. &nbsp; Touch / ESC / LMB to continue.',
-    css: 'guru{position:absolute;z-index:604;top:0;left:0;background:black;color:red;font:1.5vw monospace;display:block;text-align:center;width:calc(100% - 24px);padding:6px;border:6px solid #000;animation:blink .5s step-end infinite alternate;}@keyframes blink {50%{border-color:#F00;}}',
+    css: 'guru{position:fixed;z-index:604;top:0;left:0;background:black;color:red;font:1.5vw monospace;display:block;text-align:center;width:calc(100% - 24px);padding:6px;border:6px solid #000;animation:blink .5s step-end infinite alternate;}@keyframes blink {50%{border-color:#F00;}}',
     ref: null,
     display: function(msg, url, line, col, err){
-      console.log('display')
+      var mobileURL = 0 // how many pixels are used by URL address bar
       /* Lessons learned:
         Tablet, mobile and macOS... or more easy only Win Browser does zoom different
         fixed is a problem here... change to absolute? looks like i need the resize/onscroll handler anyway :(
-      */
       //var mobileURL = (window.visualViewport) ? (window.innerHeight - window.visualViewport.height) : 0 // else guru bar is behind URL on mobile
       // ToDo: problem when zoomed on mobile
       //mobileURL *= devicePixelRatio
       //console.log(window.innerHeight, window.visualViewport.height)
       // oops more problem then expected... ha ha
-      var mobileURL = 0 // how many pixels are used by URL address bar
       // ToDo: Zoom, but only mobile and tablets ... Yeah!
       var userAgent = navigator.userAgent.toLowerCase()
       var isTablet = /(ipad|tablet|(android(?!.*mobile))|(windows(?!.*phone)(.*touch))|kindle|playbook|silk|(puffin(?!.*(IP|AP|WP))))/.test(userAgent)
@@ -44,6 +42,7 @@
       }
       //alert('nonZoom\ndevicePixelRatio '+ devicePixelRatio +'\nmobileURL '+ mobileURL+'\ninnerHeight '+innerHeight +'\nvisualViewport '+visualViewport.height +'\nzoom '+zoom+'\nisMobile '+isMobile+'\nisTablet '+isTablet)
       console.log('nonZoom\ndevicePixelRatio '+ devicePixelRatio +'\nmobileURL '+ mobileURL+'\ninnerHeight '+innerHeight +'\nzoom '+zoom+'\nisMobile '+isMobile+'\nisTablet '+isTablet+'\nisMac '+isMac+'\nisMacLike '+isMacLike+'\nisIOS '+isIOS)
+      */
 
       var t = ['<guru style="top:'+mobileURL+'px"><style>']
       t.push(Guru.css)
@@ -64,7 +63,6 @@
       
       document.body.insertAdjacentHTML('beforeEnd',t.join(''))
       Guru.ref = document.getElementsByTagName('guru')[0]
-      Guru.resizer()
 
       // add handler to quit msg
       // should not only be mouse, also touch and keyboard or generally configurable?
@@ -72,9 +70,12 @@
       addEventListener('mousedown',Guru.mouseHandler)
       addEventListener('touchstart',Guru.touchHandler)
 
+      /*
       addEventListener('resize',Guru.resizer)
       addEventListener('scroll',Guru.resizer)
       addEventListener('orientationchange',Guru.resizer)
+      Guru.resizer()
+      */
     },
     hide: function(msg){
       document.body.removeChild(Guru.ref)
@@ -85,9 +86,11 @@
       removeEventListener('mousedown',Guru.mouseHandler)
       removeEventListener('touchstart',Guru.touchHandler)
       
+      /*
       removeEventListener('resize',Guru.resizer)
       removeEventListener('scroll',Guru.resizer)
       removeEventListener('orientationchange',Guru.resizer)
+      */
     },
     keyHandler: function(ev){
       var catched = false
@@ -128,10 +131,12 @@
 
       xhr.send( JSON.stringify(dat) )
     },
+    /*
     resizer: function(){
       if (!Guru.ref) return // no ui
       Guru.ref.style.top = scrollY +'px'
     },
+    */
   }
   
   //
@@ -142,10 +147,12 @@
     try { // try catch to prevent getting stuck in an endless loop
 
       // crossorigin check
+      /*
       if (msg.toLowerCase().indexOf('script error') > -1) {
         console.log('CORS')
         Guru.cors = true // ToDo : check if this works
       }
+      */
 
       // Server
       if (Guru.send && Guru.cors) {
