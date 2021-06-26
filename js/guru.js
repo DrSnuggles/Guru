@@ -69,7 +69,8 @@
       if (catched) ev.preventDefault()
     },
     touchHandler: function(ev){
-      console.log(ev) // ToDo
+      Guru.hide()
+      ev.preventDefault()
     },
     post: function(url, dat, cb) {
       // IE11 compatible, no fetch :(
