@@ -27,6 +27,7 @@
       if (isMobileDevice) {
          mobileURL = (window.visualViewport) ? (window.innerHeight - window.visualViewport.height*devicePixelRatio) : 0 // else guru bar is behind URL on mobile
          // ToDo: Zoom
+         alert(devicePixelRatio)
       }
       var t = ['<guru style="top:'+mobileURL+'px"><style>']
       t.push(Guru.css)
