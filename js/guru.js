@@ -23,13 +23,15 @@
       //console.log(window.innerHeight, window.visualViewport.height)
       // oops more problem then expected... ha ha
       var mobileURL = 0 // how many pixels are used by URL address bar
-      var isMobileDevice = /Mobi/i.test(navigator.userAgent)
-      if (isMobileDevice) {
-        // ToDo: Zoom
-        var zoom = document.documentElement.clientWidth / innerWidth
-        mobileURL = (visualViewport) ? (innerHeight - visualViewport.height*zoom) : 0 // else guru bar is behind URL on mobile
-        alert('zoomVersion\ndevicePixelRatio '+ devicePixelRatio +'\nmobileURL '+ mobileURL+'\ninnerHeight '+innerHeight +'\nvisualViewport '+visualViewport.height +'\nzoom '+zoom)
+      var zoom = document.documentElement.clientWidth / innerWidth
+      var userAgent = navigator.userAgent.toLowerCase()
+      var isTablet = /(ipad|tablet|(android(?!.*mobile))|(windows(?!.*phone)(.*touch))|kindle|playbook|silk|(puffin(?!.*(IP|AP|WP))))/.test(userAgent)
+      var isMobile = /mobi/i.test(userAgent)
+      if (isMobile) {
+        mobileURL = (visualViewport) ? (innerHeight - visualViewport.height) : 0 // else guru bar is behind URL on mobile
+        // ToDo: Zoom, but only mobile and tablets ... Yeah!
       }
+      alert('NonZoomVersion\ndevicePixelRatio '+ devicePixelRatio +'\nmobileURL '+ mobileURL+'\ninnerHeight '+innerHeight +'\nvisualViewport '+visualViewport.height +'\nzoom '+zoom+'\nisMobile '+isMobile+'\nisTablet '+isTablet)
       var t = ['<guru style="top:'+mobileURL+'px"><style>']
       t.push(Guru.css)
       t.push('</style><div>')
@@ -111,7 +113,7 @@
   //
   onerror = function(msg, url, line, col, err){
 
-    try { // try catch to prevent getting stuck in an endless loop
+//    try { // try catch to prevent getting stuck in an endless loop
 
       // crossorigin check
       if (msg.toLowerCase().indexOf('script error') > -1) {
@@ -147,9 +149,11 @@
       }
       
       err.cancelBubble = true
+      /*
     }catch(e){
       console.error('Error while error handling')
     }
+    */
     
     return false
   }
