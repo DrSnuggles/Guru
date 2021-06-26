@@ -28,10 +28,10 @@
       var isTablet = /(ipad|tablet|(android(?!.*mobile))|(windows(?!.*phone)(.*touch))|kindle|playbook|silk|(puffin(?!.*(IP|AP|WP))))/.test(userAgent)
       var isMobile = /mobi/i.test(userAgent)
       if (isMobile) {
-        mobileURL = (visualViewport) ? (innerHeight - visualViewport.height) : 0 // else guru bar is behind URL on mobile
+        mobileURL = (visualViewport) ? (innerHeight - visualViewport.height*devicePixelRatio) : 0 // else guru bar is behind URL on mobile
         // ToDo: Zoom, but only mobile and tablets ... Yeah!
       }
-      alert('NonZoomVersion\ndevicePixelRatio '+ devicePixelRatio +'\nmobileURL '+ mobileURL+'\ninnerHeight '+innerHeight +'\nvisualViewport '+visualViewport.height +'\nzoom '+zoom+'\nisMobile '+isMobile+'\nisTablet '+isTablet)
+      alert('VP*ratio version\ndevicePixelRatio '+ devicePixelRatio +'\nmobileURL '+ mobileURL+'\ninnerHeight '+innerHeight +'\nvisualViewport '+visualViewport.height +'\nzoom '+zoom+'\nisMobile '+isMobile+'\nisTablet '+isTablet)
       var t = ['<guru style="top:'+mobileURL+'px"><style>']
       t.push(Guru.css)
       t.push('</style><div>')
