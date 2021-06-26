@@ -25,7 +25,7 @@
       var mobileURL = 0 // how many pixels are used by URL address bar
       var isMobileDevice = /Mobi/i.test(window.navigator.userAgent)
       if (isMobileDevice) {
-        mobileURL = window.innerHeight - document.documentElement.clientHeight // else guru bar is behind URL on mobile
+        mobileURL = window.innerHeight/devicePixelRatio - document.documentElement.clientHeight // else guru bar is behind URL on mobile
       }
       var t = ['<guru style="top:'+mobileURL+'px"><style>']
       t.push(Guru.css)
