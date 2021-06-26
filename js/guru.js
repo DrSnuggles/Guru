@@ -17,6 +17,10 @@
     head: 'Software Failure. &nbsp; Touch / ESC / LMB to continue.',
     css: 'guru{position:fixed;z-index:604;top:0;left:0;background:black;color:red;font:1.5vw monospace;display:block;text-align:center;width:calc(100% - 24px);padding:6px;border:6px solid #000;animation:blink .5s step-end infinite alternate;}@keyframes blink {50%{border-color:#F00;}}',
     display: function(msg, url, line, col, err){
+      /* Lessons learned:
+        Tablet, mobile and macOS... or more easy only Win Browser does zoom different
+        fixed is a problem here... change to absolute? looks like i need the resize/onscroll handler anyway :(
+      */
       //var mobileURL = (window.visualViewport) ? (window.innerHeight - window.visualViewport.height) : 0 // else guru bar is behind URL on mobile
       // ToDo: problem when zoomed on mobile
       //mobileURL *= devicePixelRatio
