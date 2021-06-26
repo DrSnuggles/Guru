@@ -25,9 +25,9 @@
       var mobileURL = 0 // how many pixels are used by URL address bar
       var isMobileDevice = /Mobi/i.test(navigator.userAgent)
       if (isMobileDevice) {
-        mobileURL = (visualViewport) ? (innerHeight - visualViewport.height) : 0 // else guru bar is behind URL on mobile
         // ToDo: Zoom
         var zoom = document.documentElement.clientWidth / innerWidth
+        mobileURL = (visualViewport) ? (innerHeight - visualViewport.height*zoom) : 0 // else guru bar is behind URL on mobile
         alert('devicePixelRatio '+ devicePixelRatio +'\nmobileURL '+ mobileURL+'\ninnerHeight '+innerHeight +'\nvisualViewport '+visualViewport.height +'\nzoom '+zoom)
       }
       var t = ['<guru style="top:'+mobileURL+'px"><style>']
