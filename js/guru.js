@@ -15,8 +15,10 @@
     url: 'https://script.google.com/macros/s/AKfycbz4nhciVHtLjWJjNqeCodG7MFE4NGCY45S5zI--9BftHoQDovFCX88osy7WDqEOeQqn9w/exec',
     cors: true,
     head: 'Software Failure. &nbsp; Touch / ESC / LMB to continue.',
-    css: 'guru{position:fixed;z-index:604;top:0;left:0;background:black;color:red;font:1.5vw monospace;display:block;text-align:center;width:calc(100% - 24px);padding:6px;border:6px solid #000;animation:blink .5s step-end infinite alternate;}@keyframes blink {50%{border-color:#F00;}}',
+    css: 'guru{position:absolute;z-index:604;top:0;left:0;background:black;color:red;font:1.5vw monospace;display:block;text-align:center;width:calc(100% - 24px);padding:6px;border:6px solid #000;animation:blink .5s step-end infinite alternate;}@keyframes blink {50%{border-color:#F00;}}',
+    ref: null,
     display: function(msg, url, line, col, err){
+      console.log('display')
       /* Lessons learned:
         Tablet, mobile and macOS... or more easy only Win Browser does zoom different
         fixed is a problem here... change to absolute? looks like i need the resize/onscroll handler anyway :(
@@ -61,22 +63,31 @@
       t.push('</div></guru>')
       
       document.body.insertAdjacentHTML('beforeEnd',t.join(''))
+      Guru.ref = document.getElementsByTagName('guru')[0]
+      Guru.resizer()
 
       // add handler to quit msg
       // should not only be mouse, also touch and keyboard or generally configurable?
-      window.addEventListener('keydown',Guru.keyHandler)
-      window.addEventListener('mousedown',Guru.mouseHandler)
-      window.addEventListener('touchstart',Guru.touchHandler)
+      addEventListener('keydown',Guru.keyHandler)
+      addEventListener('mousedown',Guru.mouseHandler)
+      addEventListener('touchstart',Guru.touchHandler)
+
+      addEventListener('resize',Guru.resizer)
+      addEventListener('scroll',Guru.resizer)
+      addEventListener('orientationchange',Guru.resizer)
     },
     hide: function(msg){
-      var guru = document.getElementsByTagName('guru')[0]
-      document.body.removeChild(guru)
+      document.body.removeChild(Guru.ref)
+      Guru.ref = null
       
       // remove event listeners
-      window.removeEventListener('keydown',Guru.keyHandler)
-      window.removeEventListener('mousedown',Guru.mouseHandler)
-      window.removeEventListener('touchstart',Guru.touchHandler)
+      removeEventListener('keydown',Guru.keyHandler)
+      removeEventListener('mousedown',Guru.mouseHandler)
+      removeEventListener('touchstart',Guru.touchHandler)
       
+      removeEventListener('resize',Guru.resizer)
+      removeEventListener('scroll',Guru.resizer)
+      removeEventListener('orientationchange',Guru.resizer)
     },
     keyHandler: function(ev){
       var catched = false
@@ -111,11 +122,15 @@
       }
       xhr.onerror = function(){
         try { // handles both, display yes/no and already closed
-          document.getElementsByTagName('guru')[0].getElementsByTagName('span')[0].innerText = 'Error sending report.'
+          Guru.ref.getElementsByTagName('span')[0].innerText = 'Error sending report.'
         }catch(e){}
       }
 
       xhr.send( JSON.stringify(dat) )
+    },
+    resizer: function(){
+      if (!Guru.ref) return // no ui
+      Guru.ref.style.top = scrollY +'px'
     },
   }
   
@@ -124,7 +139,7 @@
   //
   onerror = function(msg, url, line, col, err){
 
-//    try { // try catch to prevent getting stuck in an endless loop
+    try { // try catch to prevent getting stuck in an endless loop
 
       // crossorigin check
       if (msg.toLowerCase().indexOf('script error') > -1) {
@@ -149,22 +164,19 @@
           try { // handles both, display yes/no and already closed
             var j = JSON.parse(ret.responseText)
             var suc = (j && j.status && j.status == "OK") ? true : false
-            document.getElementsByTagName('guru')[0].getElementsByTagName('span')[0].innerText = (suc) ? 'Report was sent.' : 'Error sending report.'
+            Guru.ref.getElementsByTagName('span')[0].innerText = (suc) ? 'Report was sent.' : 'Error sending report.'
           }catch(e){}
         })
       }
 
-      // Client
-      if (Guru.show && document.getElementsByTagName('guru').length === 0) {
+      // Client         
+      if (Guru.show && !Guru.ref) {
         Guru.display(msg, url, line, col, err)
       }
       
-      err.cancelBubble = true
-      /*
     }catch(e){
       console.error('Error while error handling')
     }
-    */
     
     return false
   }
