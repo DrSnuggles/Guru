@@ -17,7 +17,8 @@
     head: 'Software Failure. &nbsp; Touch / ESC / LMB to continue.',
     css: 'guru{position:fixed;top:0;left:0;background:black;color:red;font:1.5vw monospace;display:block;text-align:center;width:calc(100% - 24px);padding:6px;border:6px solid #000;animation:blink .5s step-end infinite alternate;}@keyframes blink {50%{border-color:#F00;}}',
     display: function(msg, url, line, col, err){
-      var t = ['<guru><style>']
+      var mobileURL = (window.visualViewport) ? (window.innerHeight - window.visualViewport.height) : 0 // else guru bar is behind URL on mobile
+      var t = ['<guru style="top:'+mobileURL+'px"><style>']
       t.push(Guru.css)
       t.push('</style><div>')
       t.push(Guru.head)
