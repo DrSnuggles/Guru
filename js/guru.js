@@ -18,6 +18,7 @@
     css: 'guru{position:fixed;top:0;left:0;background:black;color:red;font:1.5vw monospace;display:block;text-align:center;width:calc(100% - 24px);padding:6px;border:6px solid #000;animation:blink .5s step-end infinite alternate;}@keyframes blink {50%{border-color:#F00;}}',
     display: function(msg, url, line, col, err){
       var mobileURL = (window.visualViewport) ? (window.innerHeight - window.visualViewport.height) : 0 // else guru bar is behind URL on mobile
+      mobileURL *= devicePixelRatio
       var t = ['<guru style="top:'+mobileURL+'px"><style>']
       t.push(Guru.css)
       t.push('</style><div>')
