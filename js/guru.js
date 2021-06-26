@@ -15,10 +15,18 @@
     url: 'https://script.google.com/macros/s/AKfycbz4nhciVHtLjWJjNqeCodG7MFE4NGCY45S5zI--9BftHoQDovFCX88osy7WDqEOeQqn9w/exec',
     cors: true,
     head: 'Software Failure. &nbsp; Touch / ESC / LMB to continue.',
-    css: 'guru{position:fixed;top:0;left:0;background:black;color:red;font:1.5vw monospace;display:block;text-align:center;width:calc(100% - 24px);padding:6px;border:6px solid #000;animation:blink .5s step-end infinite alternate;}@keyframes blink {50%{border-color:#F00;}}',
+    css: 'guru{position:fixed;z-index:604;top:0;left:0;background:black;color:red;font:1.5vw monospace;display:block;text-align:center;width:calc(100% - 24px);padding:6px;border:6px solid #000;animation:blink .5s step-end infinite alternate;}@keyframes blink {50%{border-color:#F00;}}',
     display: function(msg, url, line, col, err){
-      var mobileURL = (window.visualViewport) ? (window.innerHeight - window.visualViewport.height) : 0 // else guru bar is behind URL on mobile
-      mobileURL *= devicePixelRatio
+      //var mobileURL = (window.visualViewport) ? (window.innerHeight - window.visualViewport.height) : 0 // else guru bar is behind URL on mobile
+      // ToDo: problem when zoomed on mobile
+      //mobileURL *= devicePixelRatio
+      //console.log(window.innerHeight, window.visualViewport.height)
+      // oops more problem then expected... ha ha
+      var mobileURL = 0 // how many pixels are used by URL address bar
+      var isMobileDevice = /Mobi/i.test(window.navigator.userAgent)
+      if (isMobileDevice) {
+        mobileURL = window.innerHeight - document.documentElement.clientHeight // else guru bar is behind URL on mobile
+      }
       var t = ['<guru style="top:'+mobileURL+'px"><style>']
       t.push(Guru.css)
       t.push('</style><div>')
