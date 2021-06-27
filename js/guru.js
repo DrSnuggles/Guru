@@ -154,31 +154,35 @@
       }
       */
 
-      // Server
-      if (Guru.send && Guru.cors) {
+      if (!Guru.ref) {
 
-        // send error
-        Guru.post(Guru.url, {
-          msg: msg,
-          url: url,
-          line: line,
-          col: col,
-          stack: err.stack,
-          agent: navigator.userAgent,
-          screen: screen.width+'x'+screen.height+'x'+screen.colorDepth,
-          window: innerWidth+'x'+innerHeight+'@'+devicePixelRatio,
-        }, function(ret){
-          try { // handles both, display yes/no and already closed
-            var j = JSON.parse(ret.responseText)
-            var suc = (j && j.status && j.status == "OK") ? true : false
-            Guru.ref.getElementsByTagName('span')[0].innerText = (suc) ? 'Report was sent.' : 'Error sending report.'
-          }catch(e){}
-        })
-      }
+        // Server
+        if (Guru.send && Guru.cors) {
+          
+          // send error
+          Guru.post(Guru.url, {
+            msg: msg,
+            url: url,
+            line: line,
+            col: col,
+            stack: err.stack,
+            agent: navigator.userAgent,
+            screen: screen.width+'x'+screen.height+'x'+screen.colorDepth,
+            window: innerWidth+'x'+innerHeight+'@'+devicePixelRatio,
+          }, function(ret){
+            try { // handles both, display yes/no and already closed
+              var j = JSON.parse(ret.responseText)
+              var suc = (j && j.status && j.status == "OK") ? true : false
+              Guru.ref.getElementsByTagName('span')[0].innerText = (suc) ? 'Report was sent.' : 'Error sending report.'
+            }catch(e){}
+          })
+        }
+        
+        // Client         
+        if (Guru.show) {
+          Guru.display(msg, url, line, col, err)
+        }
 
-      // Client         
-      if (Guru.show && !Guru.ref) {
-        Guru.display(msg, url, line, col, err)
       }
       
     }catch(e){
