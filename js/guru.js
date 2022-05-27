@@ -15,7 +15,7 @@
     url: 'https://script.google.com/macros/s/AKfycbz4nhciVHtLjWJjNqeCodG7MFE4NGCY45S5zI--9BftHoQDovFCX88osy7WDqEOeQqn9w/exec',
     cors: true,
     head: 'Software Failure. &nbsp; Touch / ESC / LMB to continue.',
-    css: 'guru{position:fixed;z-index:604;top:0;left:0;background:black;color:red;font:1.5vw monospace;display:block;text-align:center;width:calc(100% - 24px);padding:6px;border:6px solid #000;animation:blink .5s step-end infinite alternate;}@keyframes blink {50%{border-color:#F00;}}',
+    css: 'guru{box-sizing:border-box;position:fixed;z-index:604;top:0;left:0;background:black;color:red;font:1.5vw monospace;display:block;text-align:center;width:100%;padding:6px;border:6px solid #000;animation:blink .5s step-end infinite alternate;}@keyframes blink {49.999%{border-color:transparent;}50%,to{border-color:#F00;}}',
     ref: null,
     display: function(msg, url, line, col, err){
       var mobileURL = 0 // how many pixels are used by URL address bar
