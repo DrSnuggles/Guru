@@ -10,8 +10,9 @@
   // Configurable object
   //
   window.Guru = {
-    show: true,
-    send: true,
+    show: true, // guru on top
+    send: true,	// send mail
+	console: false, // show error in console
     url: 'https://script.google.com/macros/s/AKfycbz4nhciVHtLjWJjNqeCodG7MFE4NGCY45S5zI--9BftHoQDovFCX88osy7WDqEOeQqn9w/exec',
     cors: true,
     head: 'Software Failure. &nbsp; Touch / ESC / LMB to continue.',
@@ -189,7 +190,8 @@
       console.error('Error while error handling')
     }
     
-    return false
+	// display in console => return false
+    return !Guru.console
   }
     
 })()
